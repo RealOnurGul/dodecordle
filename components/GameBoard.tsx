@@ -17,8 +17,8 @@ export default function GameBoard() {
               rounded-lg
               border-2
               ${state.solvedWords[index] 
-                ? 'border-green-500 bg-green-50' 
-                : 'border-gray-300 bg-white'
+                ? 'border-green-500 bg-green-900/30' 
+                : 'border-gray-600 bg-gray-800'
               }
             `}
           >

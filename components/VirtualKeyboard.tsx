@@ -66,14 +66,14 @@ export default function VirtualKeyboard() {
       case 'present':
         return 'bg-yellow-500 hover:bg-yellow-600 text-white shadow-sm';
       case 'absent':
-        return 'bg-gray-400 hover:bg-gray-500 text-white shadow-sm';
+        return 'bg-gray-600 hover:bg-gray-700 text-white shadow-sm';
       default:
-        return 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 shadow-sm';
+        return 'bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-600 shadow-sm';
     }
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-50 border-t border-gray-300 z-10 py-2 sm:py-3">
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 z-10 py-2 sm:py-3">
       <div className="w-full max-w-6xl mx-auto px-4">
         {/* Align keyboard with middle two grids - matches GameBoard grid layout */}
         <div className="w-full">

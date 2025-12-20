@@ -70,18 +70,18 @@ export default function GamePage() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center p-4 bg-gray-50 pb-44 sm:pb-48">
+      <main className="flex min-h-screen flex-col items-center p-4 bg-gray-900 pb-44 sm:pb-48">
         <div className="w-full max-w-6xl">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <Link
               href="/"
-              className="text-gray-600 hover:text-gray-800 text-xl font-semibold flex items-center gap-2"
+              className="text-gray-300 hover:text-white text-xl font-semibold flex items-center gap-2"
             >
               ← Back
             </Link>
             <button
               onClick={() => setShowStats(true)}
-              className="text-gray-500 hover:text-gray-700 text-xl"
+              className="text-gray-400 hover:text-gray-300 text-xl"
               aria-label="Show statistics"
             >
               📊
@@ -89,19 +89,19 @@ export default function GamePage() {
           </div>
 
           <div className="text-center mb-4 sm:mb-6">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2">Dodecordle</h1>
-            <p className="text-base sm:text-lg text-gray-600">Solve 12 Wordles at once!</p>
-            <p className="text-xs sm:text-sm text-gray-500 mt-2">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-white">Dodecordle</h1>
+            <p className="text-base sm:text-lg text-gray-300">Solve 12 Wordles at once!</p>
+            <p className="text-xs sm:text-sm text-gray-400 mt-2">
               Puzzle #{state.puzzleNumber} • {state.guessesUsed}/{state.maxGuesses} guesses
             </p>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+            <p className="text-xs sm:text-sm text-gray-400 mt-1">
               Solved: {state.solvedWords.filter(s => s).length}/12
             </p>
           </div>
 
           {state.invalidWordError && (
             <div className="mb-4 text-center">
-              <p className="text-red-500 font-semibold animate-pulse">
+              <p className="text-red-400 font-semibold animate-pulse">
                 Not a valid word!
               </p>
             </div>
@@ -111,7 +111,7 @@ export default function GamePage() {
           
           {state.status === 'won' && (
             <div className="mt-4 text-center space-y-2">
-              <p className="text-green-600 font-bold text-lg">🎉 You won! All 12 words solved!</p>
+              <p className="text-green-400 font-bold text-lg">🎉 You won! All 12 words solved!</p>
               <button
                 onClick={handleShare}
                 className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded transition-colors"
@@ -119,25 +119,25 @@ export default function GamePage() {
                 Share Results
               </button>
               {shareMessage && (
-                <p className="text-sm text-gray-600">{shareMessage}</p>
+                <p className="text-sm text-gray-400">{shareMessage}</p>
               )}
             </div>
           )}
           
           {state.status === 'lost' && (
             <div className="mt-4 text-center space-y-2">
-              <p className="text-red-600 font-bold text-lg">Game Over</p>
-              <p className="text-sm text-gray-600">
+              <p className="text-red-400 font-bold text-lg">Game Over</p>
+              <p className="text-sm text-gray-400">
                 Solved: {state.solvedWords.filter(s => s).length}/12 words
               </p>
               <button
                 onClick={handleShare}
-                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded transition-colors"
+                className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition-colors"
               >
                 Share Results
               </button>
               {shareMessage && (
-                <p className="text-sm text-gray-600">{shareMessage}</p>
+                <p className="text-sm text-gray-400">{shareMessage}</p>
               )}
             </div>
           )}

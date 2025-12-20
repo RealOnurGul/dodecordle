@@ -9,7 +9,7 @@ interface GridCellProps {
 export default function GridCell({ letter, feedback, isCurrentGuess }: GridCellProps) {
   const getBackgroundColor = () => {
     if (!feedback) {
-      return isCurrentGuess ? 'bg-gray-100' : 'bg-white border-2 border-gray-300';
+      return isCurrentGuess ? 'bg-gray-800 border-2 border-gray-600 text-gray-300' : 'bg-gray-800 border-2 border-gray-600';
     }
     
     switch (feedback) {
@@ -18,9 +18,9 @@ export default function GridCell({ letter, feedback, isCurrentGuess }: GridCellP
       case 'present':
         return 'bg-yellow-500 text-white';
       case 'absent':
-        return 'bg-gray-400 text-white';
+        return 'bg-gray-600 text-white';
       default:
-        return 'bg-white border-2 border-gray-300';
+        return 'bg-gray-800 border-2 border-gray-600';
     }
   };
 
