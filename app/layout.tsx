@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { GameProvider } from "@/lib/context/GameContext";
 
 export const metadata: Metadata = {
   title: "Dodecordle - Solve 12 Wordles at Once",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <GameProvider>{children}</GameProvider>
+      </body>
     </html>
   );
 }
