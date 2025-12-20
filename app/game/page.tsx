@@ -70,7 +70,7 @@ export default function GamePage() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center p-4 bg-gray-50 pb-20 sm:pb-24">
+      <main className="flex min-h-screen flex-col items-center p-4 bg-gray-50 pb-44 sm:pb-48">
         <div className="w-full max-w-6xl">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <Link
@@ -109,8 +109,6 @@ export default function GamePage() {
           
           <GameBoard />
           
-          <VirtualKeyboard />
-          
           {state.status === 'won' && (
             <div className="mt-4 text-center space-y-2">
               <p className="text-green-600 font-bold text-lg">🎉 You won! All 12 words solved!</p>
@@ -145,6 +143,8 @@ export default function GamePage() {
           )}
         </div>
       </main>
+
+      <VirtualKeyboard />
 
       {showStats && (
         <Statistics onClose={() => setShowStats(false)} />
