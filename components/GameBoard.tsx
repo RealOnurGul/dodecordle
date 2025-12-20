@@ -1,0 +1,38 @@
+'use client';
+
+import { useGame } from '@/lib/context/GameContext';
+import WordleGrid from './WordleGrid';
+
+export default function GameBoard() {
+  const { state } = useGame();
+
+  return (
+    <div className="w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        {state.targetWords.map((targetWord, index) => (
+          <div
+            key={index}
+            className={`
+              p-2 sm:p-3
+              rounded-lg
+              border-2
+              ${state.solvedWords[index] 
+                ? 'border-green-500 bg-green-50' 
+                : 'border-gray-300 bg-white'
+              }
+            `}
+          >
+            <WordleGrid
+              guesses={state.guesses}
+              feedback={state.feedback.map(f => f[index])}
+              currentGuess={state.currentGuess}
+              isSolved={state.solvedWords[index]}
+              gridIndex={index}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
