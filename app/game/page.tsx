@@ -5,6 +5,7 @@ import GameBoard from '@/components/GameBoard';
 import VirtualKeyboard from '@/components/VirtualKeyboard';
 import Statistics from '@/components/Statistics';
 import { generateShareText, copyToClipboard } from '@/lib/utils/share';
+import { isValidWord } from '@/lib/utils/wordValidation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -24,7 +25,11 @@ export default function GamePage() {
       }
 
       if (e.key === 'Enter') {
-        submitGuess();
+        // Don't submit if word is invalid
+        const isInvalid = state.currentGuess.length === 5 && !isValidWord(state.currentGuess);
+        if (!isInvalid) {
+          submitGuess();
+        }
       } else if (e.key === 'Backspace') {
         removeLetter();
       } else if (e.key.length === 1 && /[a-z]/i.test(e.key)) {

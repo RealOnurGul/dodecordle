@@ -7,6 +7,7 @@ interface WordleGridProps {
   currentGuess: string;
   isSolved: boolean;
   gridIndex: number;
+  isCurrentGuessInvalid?: boolean;
 }
 
 export default function WordleGrid({
@@ -15,6 +16,7 @@ export default function WordleGrid({
   currentGuess,
   isSolved,
   gridIndex,
+  isCurrentGuessInvalid = false,
 }: WordleGridProps) {
   const maxGuesses = 17;
   const rows: Array<{ letters: string; feedback?: LetterFeedback[] }> = [];
@@ -50,6 +52,9 @@ export default function WordleGrid({
               feedback={row.feedback?.[colIndex]}
               isCurrentGuess={
                 rowIndex === guesses.length && currentGuess.length > 0
+              }
+              isInvalid={
+                rowIndex === guesses.length && currentGuess.length > 0 && isCurrentGuessInvalid
               }
             />
           ))}

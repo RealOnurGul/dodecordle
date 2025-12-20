@@ -2,9 +2,13 @@
 
 import { useGame } from '@/lib/context/GameContext';
 import WordleGrid from './WordleGrid';
+import { isValidWord } from '@/lib/utils/wordValidation';
 
 export default function GameBoard() {
   const { state } = useGame();
+  
+  // Check if current guess is invalid (only if it's 5 letters)
+  const isCurrentGuessInvalid = state.currentGuess.length === 5 && !isValidWord(state.currentGuess);
 
   return (
     <div className="w-full">
@@ -28,6 +32,7 @@ export default function GameBoard() {
               currentGuess={state.currentGuess}
               isSolved={state.solvedWords[index]}
               gridIndex={index}
+              isCurrentGuessInvalid={isCurrentGuessInvalid}
             />
           </div>
         ))}

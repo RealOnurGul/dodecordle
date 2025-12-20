@@ -4,12 +4,18 @@ interface GridCellProps {
   letter: string;
   feedback?: LetterFeedback;
   isCurrentGuess?: boolean;
+  isInvalid?: boolean;
 }
 
-export default function GridCell({ letter, feedback, isCurrentGuess }: GridCellProps) {
+export default function GridCell({ letter, feedback, isCurrentGuess, isInvalid }: GridCellProps) {
   const getBackgroundColor = () => {
     if (!feedback) {
-      return isCurrentGuess ? 'bg-gray-800 border-2 border-gray-600 text-gray-300' : 'bg-gray-800 border-2 border-gray-600';
+      if (isCurrentGuess) {
+        return isInvalid 
+          ? 'bg-gray-800 border-2 border-gray-600 text-red-400' 
+          : 'bg-gray-800 border-2 border-gray-600 text-gray-300';
+      }
+      return 'bg-gray-800 border-2 border-gray-600';
     }
     
     switch (feedback) {

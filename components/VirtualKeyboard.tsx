@@ -1,7 +1,7 @@
 'use client';
 
 import { useGame } from '@/lib/context/GameContext';
-import { LetterFeedback } from '@/lib/utils/wordValidation';
+import { LetterFeedback, isValidWord } from '@/lib/utils/wordValidation';
 
 const KEYBOARD_ROWS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -11,6 +11,9 @@ const KEYBOARD_ROWS = [
 
 export default function VirtualKeyboard() {
   const { state, addLetter, removeLetter, submitGuess } = useGame();
+  
+  // Check if current guess is invalid
+  const isCurrentGuessInvalid = state.currentGuess.length === 5 && !isValidWord(state.currentGuess);
 
   // Calculate keyboard feedback - show the best feedback for each letter across all guesses
   const getKeyFeedback = (letter: string): LetterFeedback | undefined => {
@@ -46,7 +49,10 @@ export default function VirtualKeyboard() {
 
   const handleKeyClick = (key: string) => {
     if (key === 'Enter') {
-      submitGuess();
+      // Don't submit if word is invalid
+      if (!isCurrentGuessInvalid) {
+        submitGuess();
+      }
     } else if (key === 'Backspace') {
       removeLetter();
     } else if (key.length === 1) {
@@ -55,7 +61,14 @@ export default function VirtualKeyboard() {
   };
 
   const getKeyColor = (key: string) => {
-    if (key === 'Enter' || key === 'Backspace') {
+    if (key === 'Enter') {
+      // Disable Enter if word is invalid
+      if (isCurrentGuessInvalid) {
+        return 'bg-gray-600 hover:bg-gray-600 active:bg-gray-600 text-gray-400 shadow-sm cursor-not-allowed';
+      }
+      return 'bg-gray-400 hover:bg-gray-500 active:bg-gray-600 text-white shadow-sm';
+    }
+    if (key === 'Backspace') {
       return 'bg-gray-400 hover:bg-gray-500 active:bg-gray-600 text-white shadow-sm';
     }
 
@@ -105,7 +118,7 @@ export default function VirtualKeyboard() {
                           ${key === 'Enter' || key === 'Backspace' ? 'text-xs sm:text-sm px-2 sm:px-2.5' : ''}
                           disabled:opacity-60 disabled:cursor-not-allowed
                         `}
-                        disabled={state.status !== 'playing'}
+                        disabled={state.status !== 'playing' || (key === 'Enter' && isCurrentGuessInvalid)}
                       >
                         {key === 'Backspace' ? '⌫' : key}
                       </button>
