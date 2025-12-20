@@ -31,6 +31,9 @@ export interface GameState {
   
   // Maximum guesses allowed
   maxGuesses: number;
+  
+  // Error state
+  invalidWordError?: boolean;
 }
 
 /**
@@ -48,6 +51,7 @@ export function createInitialGameState(targetWords: string[]): GameState {
     status: 'playing',
     guessesUsed: 0,
     maxGuesses: 17,
+    invalidWordError: false,
   };
 }
 

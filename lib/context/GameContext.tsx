@@ -4,13 +4,15 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { GameState, createInitialGameState } from '@/lib/types/game';
 import { getDailyWords, getPuzzleNumber } from '@/lib/utils/puzzle';
 import { isValidWord, calculateFeedbackForAll } from '@/lib/utils/wordValidation';
+import { updateStatisticsForGame } from '@/lib/utils/statistics';
 
 type GameAction =
   | { type: 'INIT_GAME'; targetWords: string[] }
   | { type: 'ADD_LETTER'; letter: string }
   | { type: 'REMOVE_LETTER' }
   | { type: 'SUBMIT_GUESS' }
-  | { type: 'RESET_GAME' };
+  | { type: 'RESET_GAME' }
+  | { type: 'CLEAR_ERROR' };
 
 function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -25,6 +27,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         return {
           ...state,
           currentGuess: state.currentGuess + action.letter.toLowerCase(),
+          invalidWordError: false, // Clear error when typing
         };
       }
       return state;
@@ -46,8 +49,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       }
 
       if (!isValidWord(state.currentGuess)) {
-        // Invalid word - could add error state here
-        return state;
+        // Invalid word - return state unchanged (error will be shown in UI)
+        return { ...state, invalidWordError: true };
       }
 
       const guess = state.currentGuess.toLowerCase();
@@ -63,6 +66,13 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const guessesUsed = state.guessesUsed + 1;
       const isLost = guessesUsed >= state.maxGuesses && !allSolved;
 
+      const newStatus = allSolved ? 'won' : isLost ? 'lost' : 'playing';
+      
+      // Update statistics when game ends
+      if (newStatus === 'won' || newStatus === 'lost') {
+        updateStatisticsForGame(newStatus === 'won', guessesUsed, state.puzzleDate);
+      }
+
       return {
         ...state,
         currentGuess: '',
@@ -70,7 +80,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         feedback: [...state.feedback, feedbackForAll],
         solvedWords: newSolvedWords,
         guessesUsed,
-        status: allSolved ? 'won' : isLost ? 'lost' : 'playing',
+        status: newStatus,
+        invalidWordError: false,
       };
     }
 
@@ -79,6 +90,13 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const initialState = createInitialGameState(targetWords);
       initialState.puzzleNumber = getPuzzleNumber();
       return initialState;
+    }
+
+    case 'CLEAR_ERROR': {
+      return {
+        ...state,
+        invalidWordError: false,
+      };
     }
 
     default:
@@ -93,6 +111,7 @@ interface GameContextType {
   removeLetter: () => void;
   submitGuess: () => void;
   resetGame: () => void;
+  clearError: () => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -122,6 +141,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'RESET_GAME' });
   };
 
+  const clearError = () => {
+    dispatch({ type: 'CLEAR_ERROR' });
+  };
+
   // Don't render until game is initialized
   if (!state) {
     return <div>Loading...</div>;
@@ -136,6 +159,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         removeLetter,
         submitGuess,
         resetGame,
+        clearError,
       }}
     >
       {children}

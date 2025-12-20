@@ -3,10 +3,14 @@
 import { useGame } from '@/lib/context/GameContext';
 import GameBoard from '@/components/GameBoard';
 import VirtualKeyboard from '@/components/VirtualKeyboard';
-import { useEffect } from 'react';
+import Statistics from '@/components/Statistics';
+import { generateShareText, copyToClipboard } from '@/lib/utils/share';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const { state, addLetter, removeLetter, submitGuess } = useGame();
+  const { state, addLetter, removeLetter, submitGuess, clearError } = useGame();
+  const [showStats, setShowStats] = useState(false);
+  const [shareMessage, setShareMessage] = useState('');
 
   // Handle physical keyboard input
   useEffect(() => {
@@ -25,6 +29,28 @@ export default function Home() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [state.status, addLetter, removeLetter, submitGuess]);
+
+  // Auto-clear error after 2 seconds
+  useEffect(() => {
+    if (state.invalidWordError) {
+      const timer = setTimeout(() => {
+        clearError();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [state.invalidWordError, clearError]);
+
+  const handleShare = async () => {
+    const shareText = generateShareText(state);
+    const success = await copyToClipboard(shareText);
+    if (success) {
+      setShareMessage('Copied to clipboard!');
+      setTimeout(() => setShareMessage(''), 2000);
+    } else {
+      setShareMessage('Failed to copy');
+      setTimeout(() => setShareMessage(''), 2000);
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 bg-gray-50 pb-20 sm:pb-24">
