@@ -3,7 +3,6 @@
 import { useGame } from '@/lib/context/GameContext';
 import GameBoard from '@/components/GameBoard';
 import VirtualKeyboard from '@/components/VirtualKeyboard';
-import Statistics from '@/components/Statistics';
 import { generateShareText, copyToClipboard } from '@/lib/utils/share';
 import { isValidWord } from '@/lib/utils/wordValidation';
 import { useEffect, useState } from 'react';
@@ -11,7 +10,6 @@ import Link from 'next/link';
 
 export default function GamePage() {
   const { state, addLetter, removeLetter, submitGuess, clearError } = useGame();
-  const [showStats, setShowStats] = useState(false);
   const [shareMessage, setShareMessage] = useState('');
 
   // Handle physical keyboard input
@@ -23,9 +21,6 @@ export default function GamePage() {
       }
 
       if (state.status !== 'playing') {
-        if (e.key === 'Enter' && (state.status === 'won' || state.status === 'lost')) {
-          setShowStats(true);
-        }
         return;
       }
 
@@ -57,15 +52,6 @@ export default function GamePage() {
     }
   }, [state.invalidWordError, clearError]);
 
-  // Show stats when game ends
-  useEffect(() => {
-    if (state.status === 'won' || state.status === 'lost') {
-      const timer = setTimeout(() => {
-        setShowStats(true);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [state.status]);
 
   const handleShare = async () => {
     const shareText = generateShareText(state);
@@ -83,20 +69,13 @@ export default function GamePage() {
     <>
       <main className="flex min-h-screen flex-col items-center p-4 bg-gray-900 pb-44 sm:pb-48">
         <div className="w-full max-w-6xl">
-          <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <div className="mb-4 sm:mb-6">
             <Link
               href="/"
               className="text-gray-300 hover:text-white text-xl font-semibold flex items-center gap-2"
             >
               ← Back
             </Link>
-            <button
-              onClick={() => setShowStats(true)}
-              className="text-gray-400 hover:text-gray-300 text-xl"
-              aria-label="Show statistics"
-            >
-              📊
-            </button>
           </div>
 
           <div className="text-center mb-4 sm:mb-6">
@@ -156,10 +135,6 @@ export default function GamePage() {
       </main>
 
       <VirtualKeyboard />
-
-      {showStats && (
-        <Statistics onClose={() => setShowStats(false)} />
-      )}
     </>
   );
 }

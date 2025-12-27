@@ -4,7 +4,6 @@ import React, { createContext, useContext, useReducer, useEffect, useState } fro
 import { GameState, createInitialGameState } from '@/lib/types/game';
 import { getDailyWords, getPuzzleNumber } from '@/lib/utils/puzzle';
 import { isValidWord, calculateFeedbackForAll } from '@/lib/utils/wordValidation';
-import { updateStatisticsForGame } from '@/lib/utils/statistics';
 
 type GameAction =
   | { type: 'INIT_GAME'; targetWords: string[] }
@@ -67,11 +66,6 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       const isLost = guessesUsed >= state.maxGuesses && !allSolved;
 
       const newStatus = allSolved ? 'won' : isLost ? 'lost' : 'playing';
-      
-      // Update statistics when game ends
-      if (newStatus === 'won' || newStatus === 'lost') {
-        updateStatisticsForGame(newStatus === 'won', guessesUsed, state.puzzleDate);
-      }
 
       return {
         ...state,
