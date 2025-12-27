@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import { GameState, createInitialGameState } from '@/lib/types/game';
 import { getDailyWords, getPuzzleNumber } from '@/lib/utils/puzzle';
 import { isValidWord, calculateFeedbackForAll } from '@/lib/utils/wordValidation';
@@ -118,11 +118,13 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(gameReducer, null as any);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Initialize game on mount
+  // Initialize game on mount (client-side only)
   useEffect(() => {
     const targetWords = getDailyWords();
     dispatch({ type: 'INIT_GAME', targetWords });
+    setIsInitialized(true);
   }, []);
 
   const addLetter = (letter: string) => {
@@ -145,9 +147,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
-  // Don't render until game is initialized
-  if (!state) {
-    return <div>Loading...</div>;
+  // Don't render until game is initialized (prevents hydration mismatch)
+  if (!isInitialized || !state) {
+    return <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">Loading...</div>;
   }
 
   return (
