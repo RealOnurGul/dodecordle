@@ -17,6 +17,11 @@ export default function GamePage() {
   // Handle physical keyboard input
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if modifier keys are pressed (Cmd/Ctrl/Shift/Alt)
+      if (e.metaKey || e.ctrlKey || e.altKey) {
+        return;
+      }
+
       if (state.status !== 'playing') {
         if (e.key === 'Enter' && (state.status === 'won' || state.status === 'lost')) {
           setShowStats(true);
@@ -32,7 +37,8 @@ export default function GamePage() {
         }
       } else if (e.key === 'Backspace') {
         removeLetter();
-      } else if (e.key.length === 1 && /[a-z]/i.test(e.key)) {
+      } else if (e.key.length === 1 && /[a-z]/i.test(e.key) && !e.shiftKey) {
+        // Only process letters if Shift is not pressed
         addLetter(e.key);
       }
     };

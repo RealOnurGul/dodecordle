@@ -15,7 +15,7 @@ export default function GridCell({ letter, feedback, isCurrentGuess, isInvalid }
           ? 'bg-gray-800 border-2 border-gray-600 text-red-400' 
           : 'bg-gray-800 border-2 border-gray-600 text-gray-300';
       }
-      return 'bg-gray-800 border-2 border-gray-600';
+      return 'bg-gray-800 border-2 border-gray-600 text-gray-800';
     }
     
     switch (feedback) {
@@ -26,7 +26,7 @@ export default function GridCell({ letter, feedback, isCurrentGuess, isInvalid }
       case 'absent':
         return 'bg-gray-600 text-white';
       default:
-        return 'bg-gray-800 border-2 border-gray-600';
+        return 'bg-gray-800 border-2 border-gray-600 text-gray-800';
     }
   };
 
@@ -39,9 +39,9 @@ export default function GridCell({ letter, feedback, isCurrentGuess, isInvalid }
         flex items-center justify-center
         text-xl sm:text-2xl font-bold
         rounded
-        transition-colors duration-200
         ${getBackgroundColor()}
       `}
+      style={{ transition: 'none' }}
     >
       {displayLetter}
     </div>
