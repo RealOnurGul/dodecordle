@@ -3,19 +3,27 @@ import wordsData from '@/lib/data/words.json';
 const WORDS = wordsData.words;
 
 /**
- * Get the date string for today (YYYY-MM-DD)
- * Puzzles reset at 3am, so we use the previous day if it's before 3am
+ * Get the date string for today (YYYY-MM-DD) in EST
+ * Puzzles reset at 3am EST, so we use the previous day if it's before 3am EST
  */
 export function getPuzzleDate(): string {
+  // Get current time in EST/EDT
   const now = new Date();
-  const hour = now.getHours();
+  const estDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
   
-  // If before 3am, use yesterday's date
+  const hour = estDate.getHours();
+  
+  // If before 3am EST, use yesterday's date
   if (hour < 3) {
-    now.setDate(now.getDate() - 1);
+    estDate.setDate(estDate.getDate() - 1);
   }
   
-  return now.toISOString().split('T')[0];
+  // Format as YYYY-MM-DD
+  const year = estDate.getFullYear();
+  const month = String(estDate.getMonth() + 1).padStart(2, '0');
+  const day = String(estDate.getDate()).padStart(2, '0');
+  
+  return `${year}-${month}-${day}`;
 }
 
 /**
@@ -73,3 +81,22 @@ export function getPuzzleNumber(): number {
   return diffDays;
 }
 
+/**
+ * Get 12 random words for practice mode (truly random, not seeded)
+ */
+export function getPracticeWords(): string[] {
+  const selectedWords: string[] = [];
+  const usedIndices = new Set<number>();
+  
+  // Select 12 unique words randomly
+  while (selectedWords.length < 12) {
+    const index = Math.floor(Math.random() * WORDS.length);
+    
+    if (!usedIndices.has(index)) {
+      usedIndices.add(index);
+      selectedWords.push(WORDS[index]);
+    }
+  }
+  
+  return selectedWords;
+}

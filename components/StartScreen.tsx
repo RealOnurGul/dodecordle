@@ -2,11 +2,7 @@
 
 import Link from 'next/link';
 
-interface StartScreenProps {
-  onStartPractice?: () => void;
-}
-
-export default function StartScreen({ onStartPractice }: StartScreenProps) {
+export default function StartScreen() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-900">
       <div className="w-full max-w-md">
@@ -55,13 +51,12 @@ export default function StartScreen({ onStartPractice }: StartScreenProps) {
               >
                 Daily Game
               </Link>
-              <button
-                onClick={onStartPractice}
-                disabled={!onStartPractice}
-                className="flex-1 bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+              <Link
+                href="/game?practice=true"
+                className="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors text-center shadow-md hover:shadow-lg"
               >
                 Practice
-              </button>
+              </Link>
             </div>
           </div>
         </div>

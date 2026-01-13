@@ -7,10 +7,26 @@ import { generateShareText, copyToClipboard } from '@/lib/utils/share';
 import { isValidWord } from '@/lib/utils/wordValidation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 export default function GamePage() {
-  const { state, addLetter, removeLetter, submitGuess, clearError } = useGame();
+  const { state, addLetter, removeLetter, submitGuess, clearError, initPractice, initDaily, isPractice: contextIsPractice } = useGame();
   const [shareMessage, setShareMessage] = useState('');
+  const searchParams = useSearchParams();
+  const urlIsPractice = searchParams.get('practice') === 'true';
+
+  // Handle mode switching based on URL
+  useEffect(() => {
+    if (urlIsPractice && !contextIsPractice) {
+      // Switch to practice mode
+      initPractice();
+    } else if (!urlIsPractice && contextIsPractice) {
+      // Switch to daily mode
+      initDaily();
+    }
+  }, [urlIsPractice, contextIsPractice, initPractice, initDaily]);
+
+  const isPractice = contextIsPractice;
 
   // Handle physical keyboard input
   useEffect(() => {
@@ -65,6 +81,16 @@ export default function GamePage() {
     }
   };
 
+  // Format date for display (e.g., "Jan 15, 2024")
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+  };
+
   return (
     <>
       <main className="flex min-h-screen flex-col items-center p-4 bg-gray-900 pb-44 sm:pb-48">
@@ -79,11 +105,20 @@ export default function GamePage() {
           </div>
 
           <div className="text-center mb-4 sm:mb-6">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-white">Dodecordle</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-white">
+              {isPractice ? 'Practice Mode' : `DAILY GAME (${formatDate(state.puzzleDate)})`}
+            </h1>
             <p className="text-base sm:text-lg text-gray-300">Solve 12 Wordles at once!</p>
-            <p className="text-xs sm:text-sm text-gray-400 mt-2">
-              Puzzle #{state.puzzleNumber} • {state.guessesUsed}/{state.maxGuesses} guesses
-            </p>
+            {!isPractice && (
+              <p className="text-xs sm:text-sm text-gray-400 mt-2">
+                Puzzle #{state.puzzleNumber} • {state.guessesUsed}/{state.maxGuesses} guesses
+              </p>
+            )}
+            {isPractice && (
+              <p className="text-xs sm:text-sm text-gray-400 mt-2">
+                {state.guessesUsed}/{state.maxGuesses} guesses
+              </p>
+            )}
             <p className="text-xs sm:text-sm text-gray-400 mt-1">
               Solved: {state.solvedWords.filter(s => s).length}/12
             </p>
