@@ -14,17 +14,29 @@ export default function GamePage() {
   const [shareMessage, setShareMessage] = useState('');
   const searchParams = useSearchParams();
   const urlIsPractice = searchParams.get('practice') === 'true';
+  const [modeInitialized, setModeInitialized] = useState(false);
 
-  // Handle mode switching based on URL
+  // Initialize mode based on URL immediately on mount
   useEffect(() => {
-    if (urlIsPractice && !contextIsPractice) {
-      // Switch to practice mode
+    if (urlIsPractice) {
       initPractice();
-    } else if (!urlIsPractice && contextIsPractice) {
-      // Switch to daily mode
+    } else {
       initDaily();
     }
-  }, [urlIsPractice, contextIsPractice, initPractice, initDaily]);
+    setModeInitialized(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
+  // Handle mode changes when URL changes after initial load
+  useEffect(() => {
+    if (modeInitialized) {
+      if (urlIsPractice && !contextIsPractice) {
+        initPractice();
+      } else if (!urlIsPractice && contextIsPractice) {
+        initDaily();
+      }
+    }
+  }, [urlIsPractice, contextIsPractice, modeInitialized, initPractice, initDaily]);
 
   const isPractice = contextIsPractice;
 
@@ -92,6 +104,15 @@ export default function GamePage() {
       year: 'numeric' 
     });
   };
+
+  // Don't render until mode is initialized to prevent flash
+  if (!modeInitialized) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>
