@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Dodecordle Cache</title>
+</head>
+<body>
+    <h1>Clear Dodecordle Cache</h1>
+    <button onclick="clearCache()">Clear All Dodecordle Data</button>
+    <p id="status"></p>
+    <script>
+        function clearCache() {
+            try {
+                localStorage.removeItem('dodecordle-daily-game');
+                localStorage.removeItem('dodecordle-daily-game-date');
+                localStorage.removeItem('dodecordle-stats');
+                document.getElementById('status').textContent = 'Cache cleared! You can close this page now.';
+                document.getElementById('status').style.color = 'green';
+            } catch (e) {
+                document.getElementById('status').textContent = 'Error: ' + e.message;
+                document.getElementById('status').style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useReducer, useEffect, useState, useRef } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState, useRef, useCallback } from 'react';
 import { GameState, createInitialGameState } from '@/lib/types/game';
 import { getDailyWords, getPuzzleNumber, getPuzzleDate, getPracticeWords } from '@/lib/utils/puzzle';
 import { isValidWord, calculateFeedbackForAll } from '@/lib/utils/wordValidation';
@@ -170,15 +170,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'RESET_GAME' });
   };
 
-  const initPractice = () => {
+  const initPractice = useCallback(() => {
     const practiceWords = getPracticeWords();
     isPracticeRef.current = true;
     setIsPractice(true);
     // Practice mode should always start fresh - don't save to localStorage
     dispatch({ type: 'INIT_GAME', targetWords: practiceWords, isPractice: true });
-  };
+  }, []);
 
-  const initDaily = () => {
+  const initDaily = useCallback(() => {
     const savedDailyGame = loadDailyGame();
     isPracticeRef.current = false;
     setIsPractice(false);
@@ -190,7 +190,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       const targetWords = getDailyWords();
       dispatch({ type: 'INIT_GAME', targetWords, isPractice: false });
     }
-  };
+  }, []);
 
   const clearError = () => {
     dispatch({ type: 'CLEAR_ERROR' });

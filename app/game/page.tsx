@@ -82,8 +82,10 @@ export default function GamePage() {
   };
 
   // Format date for display (e.g., "Jan 15, 2024")
+  // Parse YYYY-MM-DD format directly to avoid timezone issues
   const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('en-US', { 
       month: 'short', 
       day: 'numeric', 

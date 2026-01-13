@@ -7,21 +7,36 @@ const WORDS = wordsData.words;
  * Puzzles reset at 3am EST, so we use the previous day if it's before 3am EST
  */
 export function getPuzzleDate(): string {
-  // Get current time in EST/EDT
   const now = new Date();
-  const estDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
   
-  const hour = estDate.getHours();
+  // Get EST hour to check if we should use yesterday
+  const hourFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    hour: '2-digit',
+    hour12: false,
+  });
+  const hourParts = hourFormatter.formatToParts(now);
+  const hour = parseInt(hourParts.find(p => p.type === 'hour')!.value, 10);
   
-  // If before 3am EST, use yesterday's date
+  // If before 3am EST, get yesterday's date
+  let dateToFormat = now;
   if (hour < 3) {
-    estDate.setDate(estDate.getDate() - 1);
+    // Subtract 24 hours to get yesterday in EST
+    dateToFormat = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   }
   
-  // Format as YYYY-MM-DD
-  const year = estDate.getFullYear();
-  const month = String(estDate.getMonth() + 1).padStart(2, '0');
-  const day = String(estDate.getDate()).padStart(2, '0');
+  // Get EST date components
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  
+  const dateParts = dateFormatter.formatToParts(dateToFormat);
+  const year = dateParts.find(p => p.type === 'year')!.value;
+  const month = dateParts.find(p => p.type === 'month')!.value;
+  const day = dateParts.find(p => p.type === 'day')!.value;
   
   return `${year}-${month}-${day}`;
 }
