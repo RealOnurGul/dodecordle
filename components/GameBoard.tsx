@@ -11,8 +11,8 @@ export default function GameBoard() {
   const isCurrentGuessInvalid = state.currentGuess.length === 5 && !isValidWord(state.currentGuess);
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+    <div className="w-full flex justify-center">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4" style={{ width: 'calc(50% + 0.5rem)', maxWidth: '100%' }}>
         {state.targetWords.map((targetWord, index) => (
           <div
             key={index}
