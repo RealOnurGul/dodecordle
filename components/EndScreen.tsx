@@ -31,14 +31,30 @@ function findSolveGuess(state: GameState, wordIndex: number): number {
 }
 
 /**
+ * Format date for display (e.g., "Jan 15, 2024")
+ */
+function formatDate(dateString: string): string {
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+}
+
+/**
  * Generate share text in the format requested
  */
 function generateEndScreenShareText(state: GameState, isPractice: boolean): string {
-  const title = isPractice 
-    ? 'Practice Dodecordle' 
-    : `Daily Dodecordle #${state.puzzleNumber}`;
+  let text = '';
   
-  let text = `${title}\n`;
+  if (isPractice) {
+    text = 'Practice Dodecordle\n';
+  } else {
+    const dateStr = formatDate(state.puzzleDate);
+    text = `Daily Dodecordle #${state.puzzleNumber} (${dateStr})\n`;
+  }
 
   // Create 2 columns, 6 rows layout
   const wordsPerColumn = 6;
@@ -71,6 +87,13 @@ function generateEndScreenShareText(state: GameState, isPractice: boolean): stri
       : '🟥';
     
     text += `${leftWord.toUpperCase()} ${leftSquare} ${rightWord.toUpperCase()} ${rightSquare}\n`;
+  }
+  
+  // Add footer message
+  if (isPractice) {
+    text += '\nHere is my score in practice mode can you beat it?';
+  } else {
+    text += '\nCome try to beat my score at https://dodecordle.vercel.app/';
   }
   
   return text;
