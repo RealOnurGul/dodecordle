@@ -7,6 +7,9 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   title: "Dodecordle - Solve 12 Wordles at Once",
   description: "A word puzzle game where you solve 12 Wordle puzzles simultaneously",
+  other: {
+    'google-adsense-account': 'ca-pub-3792047273691395',
+  },
 };
 
 export default function RootLayout({
