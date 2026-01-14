@@ -63,16 +63,12 @@ export default function StartScreen() {
 
         {/* Footer */}
         <div className="mt-12 text-center">
-          <a
-            href="#"
+          <Link
+            href="/privacy"
             className="text-gray-400 hover:text-gray-300 text-sm transition-colors"
-            onClick={(e) => {
-              e.preventDefault();
-              // Privacy policy will be added later
-            }}
           >
             Privacy Policy
-          </a>
+          </Link>
         </div>
       </div>
     </main>
