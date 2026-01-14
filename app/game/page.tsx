@@ -3,7 +3,7 @@
 import { useGame } from '@/lib/context/GameContext';
 import GameBoard from '@/components/GameBoard';
 import VirtualKeyboard from '@/components/VirtualKeyboard';
-import { generateShareText, copyToClipboard } from '@/lib/utils/share';
+import EndScreen from '@/components/EndScreen';
 import { isValidWord } from '@/lib/utils/wordValidation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -11,10 +11,10 @@ import { useSearchParams } from 'next/navigation';
 
 export default function GamePage() {
   const { state, addLetter, removeLetter, submitGuess, clearError, initPractice, initDaily, isPractice: contextIsPractice } = useGame();
-  const [shareMessage, setShareMessage] = useState('');
   const searchParams = useSearchParams();
   const urlIsPractice = searchParams.get('practice') === 'true';
   const [modeInitialized, setModeInitialized] = useState(false);
+  const [endScreenDismissed, setEndScreenDismissed] = useState(false);
 
   // Initialize mode based on URL immediately on mount
   useEffect(() => {
@@ -26,6 +26,13 @@ export default function GamePage() {
     setModeInitialized(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
+  
+  // Show end screen when game is completed (on load or when status changes)
+  useEffect(() => {
+    if (state && (state.status === 'won' || state.status === 'lost')) {
+      setEndScreenDismissed(false);
+    }
+  }, [state?.status]);
 
   // Handle mode changes when URL changes after initial load
   useEffect(() => {
@@ -81,17 +88,6 @@ export default function GamePage() {
   }, [state.invalidWordError, clearError]);
 
 
-  const handleShare = async () => {
-    const shareText = generateShareText(state);
-    const success = await copyToClipboard(shareText);
-    if (success) {
-      setShareMessage('Copied to clipboard!');
-      setTimeout(() => setShareMessage(''), 2000);
-    } else {
-      setShareMessage('Failed to copy');
-      setTimeout(() => setShareMessage(''), 2000);
-    }
-  };
 
   // Format date for display (e.g., "Jan 15, 2024")
   // Parse YYYY-MM-DD format directly to avoid timezone issues
@@ -157,37 +153,12 @@ export default function GamePage() {
           
           <GameBoard />
           
-          {state.status === 'won' && (
-            <div className="mt-4 text-center space-y-2">
-              <p className="text-green-400 font-bold text-lg">🎉 You won! All 12 words solved!</p>
-              <button
-                onClick={handleShare}
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded transition-colors"
-              >
-                Share Results
-              </button>
-              {shareMessage && (
-                <p className="text-sm text-gray-400">{shareMessage}</p>
-              )}
-            </div>
-          )}
-          
-          {state.status === 'lost' && (
-            <div className="mt-4 text-center space-y-2">
-              <p className="text-red-400 font-bold text-lg">Game Over</p>
-              <p className="text-sm text-gray-400">
-                Solved: {state.solvedWords.filter(s => s).length}/12 words
-              </p>
-              <button
-                onClick={handleShare}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition-colors"
-              >
-                Share Results
-              </button>
-              {shareMessage && (
-                <p className="text-sm text-gray-400">{shareMessage}</p>
-              )}
-            </div>
+          {(state.status === 'won' || state.status === 'lost') && !endScreenDismissed && (
+            <EndScreen 
+              state={state} 
+              isPractice={isPractice} 
+              onClose={() => setEndScreenDismissed(true)}
+            />
           )}
         </div>
       </main>
