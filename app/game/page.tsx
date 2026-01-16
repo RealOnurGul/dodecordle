@@ -160,6 +160,54 @@ export default function GamePage() {
               onClose={() => setEndScreenDismissed(true)}
             />
           )}
+
+          {/* Content section for AdSense placement */}
+          <section className="mt-12 mb-8 text-gray-300 max-w-3xl mx-auto">
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-3">How to Play Dodecordle</h2>
+                <p className="mb-2">
+                  Dodecordle is an exciting word puzzle game where you solve 12 Wordle puzzles simultaneously! Each guess you make applies to all 12 target words at once.
+                </p>
+                <p className="mb-2">
+                  After each guess, you'll see color feedback for each letter across all 12 grids. Green means the letter is in the correct position, yellow means the letter is in the word but in the wrong position, and gray means the letter is not in the word at all.
+                </p>
+                <p>
+                  The challenge is to strategically use your guesses to narrow down all 12 words at the same time. You have a limited number of guesses, so think carefully about each word you choose!
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3">Frequently Asked Questions</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">What is the difference between Daily Game and Practice Mode?</h4>
+                    <p className="text-sm text-gray-400">
+                      Daily Game features a new puzzle each day that everyone plays. Practice Mode lets you play unlimited games with randomly generated puzzles.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">How many guesses do I get?</h4>
+                    <p className="text-sm text-gray-400">
+                      You have 14 guesses to solve all 12 words in Daily Game mode. Practice Mode gives you the same challenge with unlimited attempts.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">Can I use the same guess strategy for all words?</h4>
+                    <p className="text-sm text-gray-400">
+                      Yes! Each guess you make applies to all 12 grids simultaneously. Your goal is to find words that help narrow down multiple target words at once.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">What happens if I solve some words but not all?</h4>
+                    <p className="text-sm text-gray-400">
+                      You can see your progress as you solve each word. The game shows how many words you've solved out of 12. Try to solve all 12 before running out of guesses!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
 
