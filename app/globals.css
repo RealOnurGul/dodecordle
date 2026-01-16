@@ -39,20 +39,25 @@ body {
   }
 }
 
-/* Ensure side rail ad containers maintain full height */
-.ad-container {
-  height: 100vh !important;
-  min-height: 100vh !important;
-}
+/* Side rail ad containers - ensure full height */
+@media (min-width: 1024px) {
+  .ad-container {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    width: 400px !important;
+  }
 
-.side-rail-ad {
-  height: 100vh !important;
-  min-height: 100vh !important;
-  width: 400px !important;
-}
+  .side-rail-ad {
+    display: block !important;
+    width: 400px !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+  }
 
-/* Prevent AdSense from shrinking the ad below viewport height */
-.side-rail-ad iframe {
-  min-height: 100vh !important;
+  /* Ensure AdSense iframe fills container */
+  .side-rail-ad iframe {
+    width: 400px !important;
+    min-height: 100vh !important;
+  }
 }
 

@@ -24,15 +24,10 @@ export default function SideRailAds() {
     <>
       {/* Right Side Rail Ad - Active slot - Full height vertical ad */}
       <aside className="hidden ad-rail:block fixed right-0 top-0 w-[400px] h-screen pointer-events-none z-0">
-        <div className="ad-container absolute top-0 right-0 w-[400px] h-full pointer-events-auto" style={{ height: '100vh', minHeight: '100vh' }}>
+        <div className="ad-container absolute top-0 right-0 w-[400px] h-screen pointer-events-auto">
           <ins
             className="adsbygoogle side-rail-ad"
-            style={{ 
-              display: 'block', 
-              width: '400px', 
-              height: '100vh',
-              minHeight: '100vh'
-            }}
+            style={{ display: 'block' }}
             data-ad-client="ca-pub-3792047273691395"
             data-ad-slot="6289116646"
             data-ad-format="auto"
@@ -43,15 +38,10 @@ export default function SideRailAds() {
 
       {/* Left Side Rail Ad - Active slot - Full height vertical ad */}
       <aside className="hidden ad-rail:block fixed left-0 top-0 w-[400px] h-screen pointer-events-none z-0">
-        <div className="ad-container absolute top-0 left-0 w-[400px] h-full pointer-events-auto" style={{ height: '100vh', minHeight: '100vh' }}>
+        <div className="ad-container absolute top-0 left-0 w-[400px] h-screen pointer-events-auto">
           <ins
             className="adsbygoogle side-rail-ad"
-            style={{ 
-              display: 'block', 
-              width: '400px', 
-              height: '100vh',
-              minHeight: '100vh'
-            }}
+            style={{ display: 'block' }}
             data-ad-client="ca-pub-3792047273691395"
             data-ad-slot="5084873857"
             data-ad-format="auto"
