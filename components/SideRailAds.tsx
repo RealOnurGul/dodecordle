@@ -24,9 +24,9 @@ export default function SideRailAds() {
     <>
       {/* Right Side Rail Ad - Active slot - Full height vertical ad */}
       <aside className="hidden ad-rail:block fixed right-0 top-0 w-[400px] h-screen pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[400px] h-full pointer-events-auto">
+        <div className="ad-container absolute top-0 right-0 w-[400px] h-full pointer-events-auto" style={{ height: '100vh', minHeight: '100vh' }}>
           <ins
-            className="adsbygoogle"
+            className="adsbygoogle side-rail-ad"
             style={{ 
               display: 'block', 
               width: '400px', 
@@ -43,9 +43,9 @@ export default function SideRailAds() {
 
       {/* Left Side Rail Ad - Active slot - Full height vertical ad */}
       <aside className="hidden ad-rail:block fixed left-0 top-0 w-[400px] h-screen pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-[400px] h-full pointer-events-auto">
+        <div className="ad-container absolute top-0 left-0 w-[400px] h-full pointer-events-auto" style={{ height: '100vh', minHeight: '100vh' }}>
           <ins
-            className="adsbygoogle"
+            className="adsbygoogle side-rail-ad"
             style={{ 
               display: 'block', 
               width: '400px', 

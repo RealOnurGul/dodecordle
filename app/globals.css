@@ -39,3 +39,20 @@ body {
   }
 }
 
+/* Ensure side rail ad containers maintain full height */
+.ad-container {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
+.side-rail-ad {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  width: 400px !important;
+}
+
+/* Prevent AdSense from shrinking the ad below viewport height */
+.side-rail-ad iframe {
+  min-height: 100vh !important;
+}
+
