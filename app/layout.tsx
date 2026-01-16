@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { GameProvider } from "@/lib/context/GameContext";
 import { Analytics } from "@vercel/analytics/next";
+import SideRailAds from "@/components/SideRailAds";
 
 export const metadata: Metadata = {
   title: "Dodecordle - Solve 12 Wordles at Once",
@@ -28,6 +29,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <GameProvider>{children}</GameProvider>
+        <SideRailAds />
         <Analytics />
       </body>
     </html>

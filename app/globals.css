@@ -31,3 +31,11 @@ body {
   overflow-y: auto;
 }
 
+/* Add padding to main content on wide screens to accommodate side rail ads */
+@media (min-width: 1024px) {
+  main {
+    padding-left: 440px; /* 400px ad + 40px spacing */
+    padding-right: 440px; /* 400px ad + 40px spacing */
+  }
+}
+
