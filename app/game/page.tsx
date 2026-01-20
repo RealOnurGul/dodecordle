@@ -7,11 +7,12 @@ import EndScreen from '@/components/EndScreen';
 import { isValidWord } from '@/lib/utils/wordValidation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function GamePage() {
   const { state, addLetter, removeLetter, submitGuess, clearError, initPractice, initDaily, isPractice: contextIsPractice } = useGame();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const urlIsPractice = searchParams.get('practice') === 'true';
   const [modeInitialized, setModeInitialized] = useState(false);
   const [endScreenDismissed, setEndScreenDismissed] = useState(false);
@@ -112,16 +113,25 @@ export default function GamePage() {
 
   return (
     <>
+      {/* Back button - positioned outside main to ensure it's always clickable */}
+      <div className="fixed top-4 left-4 z-[100] pointer-events-auto">
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            router.push('/');
+          }}
+          className="text-gray-300 hover:text-white text-xl font-semibold flex items-center gap-2 cursor-pointer bg-gray-900/80 px-3 py-2 rounded-lg backdrop-blur-sm"
+        >
+          ← Back
+        </a>
+      </div>
+      
       <main className="flex min-h-screen flex-col items-center p-4 bg-gray-900 pb-44 sm:pb-48">
         <div className="w-full max-w-6xl">
-          <div className="mb-4 sm:mb-6">
-            <Link
-              href="/"
-              className="text-gray-300 hover:text-white text-xl font-semibold flex items-center gap-2"
-            >
-              ← Back
-            </Link>
-          </div>
+          {/* Spacer to account for fixed back button */}
+          <div className="mb-4 sm:mb-6 h-10 sm:h-12"></div>
 
           <div className="text-center mb-4 sm:mb-6">
             <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-white">
