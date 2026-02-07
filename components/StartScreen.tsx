@@ -69,11 +69,14 @@ export default function StartScreen() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/privacy"
-            className="text-gray-400 hover:text-gray-300 text-sm transition-colors"
-          >
+        <div className="mt-8 text-center flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm">
+          <Link href="/how-to-play" className="text-gray-400 hover:text-gray-300 transition-colors">
+            How to Play
+          </Link>
+          <Link href="/about" className="text-gray-400 hover:text-gray-300 transition-colors">
+            About
+          </Link>
+          <Link href="/privacy" className="text-gray-400 hover:text-gray-300 transition-colors">
             Privacy Policy
           </Link>
         </div>
