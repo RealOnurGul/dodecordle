@@ -31,33 +31,4 @@ body {
   overflow-y: auto;
 }
 
-/* Add padding to main content on wide screens to accommodate side rail ads */
-@media (min-width: 1024px) {
-  main {
-    padding-left: 440px; /* 400px ad + 40px spacing */
-    padding-right: 440px; /* 400px ad + 40px spacing */
-  }
-}
-
-/* Side rail ad containers - ensure full height */
-@media (min-width: 1024px) {
-  .ad-container {
-    height: 100vh !important;
-    min-height: 100vh !important;
-    width: 400px !important;
-  }
-
-  .side-rail-ad {
-    display: block !important;
-    width: 400px !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-  }
-
-  /* Ensure AdSense iframe fills container */
-  .side-rail-ad iframe {
-    width: 400px !important;
-    min-height: 100vh !important;
-  }
-}
 

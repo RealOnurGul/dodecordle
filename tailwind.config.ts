@@ -7,11 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      screens: {
-        'ad-rail': '1024px', // Breakpoint for side rail ads
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

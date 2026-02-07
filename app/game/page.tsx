@@ -171,7 +171,6 @@ export default function GamePage() {
             />
           )}
 
-          {/* Content section for AdSense placement */}
           <section className="mt-12 mb-8 text-gray-300 max-w-3xl mx-auto">
             <div className="space-y-6">
               <div>
