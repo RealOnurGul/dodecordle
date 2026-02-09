@@ -69,17 +69,13 @@ export default function StartScreen() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm">
-          <Link href="/how-to-play" className="text-gray-400 hover:text-gray-300 transition-colors">
-            How to Play
-          </Link>
-          <Link href="/about" className="text-gray-400 hover:text-gray-300 transition-colors">
-            About
-          </Link>
-          <Link href="/privacy" className="text-gray-400 hover:text-gray-300 transition-colors">
-            Privacy Policy
-          </Link>
-        </div>
+        <nav className="mt-8 flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-gray-500" aria-label="Site">
+          <Link href="/guides" className="hover:text-white transition-colors">Guides</Link>
+          <Link href="/how-to-play" className="hover:text-white transition-colors">How to play</Link>
+          <Link href="/about" className="hover:text-white transition-colors">About</Link>
+          <Link href="/archive" className="hover:text-white transition-colors">Archive</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+        </nav>
       </div>
     </main>
   );

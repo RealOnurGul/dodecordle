@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import PageHeader from '@/components/PageHeader';
+import PageFooter from '@/components/PageFooter';
 
 export const metadata = {
   title: 'About Dodecordle | 12 Word Wordle & Daily Word Puzzle',
@@ -6,51 +8,11 @@ export const metadata = {
     'Learn about Dodecordle: the wordle alternative where you solve 12 words at once. Our daily word puzzle and practice mode, and why we built this word game.',
 };
 
-function NavLinks() {
-  return (
-    <nav className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-400 mb-6">
-      <Link href="/" className="hover:text-white transition-colors">Home</Link>
-      <Link href="/game" className="hover:text-white transition-colors">Daily</Link>
-      <Link href="/game?practice=true" className="hover:text-white transition-colors">Practice</Link>
-      <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-    </nav>
-  );
-}
-
-function CTAButtons() {
-  return (
-    <div className="flex flex-wrap gap-3 my-6">
-      <Link
-        href="/game"
-        className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-colors shadow-md"
-      >
-        Play Daily
-      </Link>
-      <Link
-        href="/game?practice=true"
-        className="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md"
-      >
-        Play Practice
-      </Link>
-    </div>
-  );
-}
-
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-lg sm:text-xl font-semibold text-gray-300 hover:text-white transition-colors mb-4"
-          >
-            <span className="text-2xl sm:text-3xl">←</span>
-            <span>Go back to home</span>
-          </Link>
-        </div>
-        <NavLinks />
-        <CTAButtons />
+        <PageHeader />
 
         <h1 className="text-3xl sm:text-4xl font-bold text-white mb-6">About Dodecordle</h1>
 
@@ -155,8 +117,7 @@ export default function AboutPage() {
           </section>
         </div>
 
-        <CTAButtons />
-        <NavLinks />
+        <PageFooter />
       </div>
     </div>
   );

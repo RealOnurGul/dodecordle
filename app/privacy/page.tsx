@@ -1,20 +1,14 @@
 import Link from 'next/link';
+import PageHeader from '@/components/PageHeader';
+import PageFooter from '@/components/PageFooter';
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-lg sm:text-xl font-semibold text-gray-300 hover:text-white transition-colors mb-4"
-          >
-            <span className="text-2xl sm:text-3xl">←</span>
-            <span>Go back to home</span>
-          </Link>
-        </div>
+        <PageHeader />
+
         <h1 className="text-3xl sm:text-4xl font-bold mb-6">Privacy Policy</h1>
-        
         <p className="text-gray-400 mb-8">Last updated: January 13, 2025</p>
 
         <div className="space-y-6 text-gray-300">
@@ -36,15 +30,14 @@ export default function PrivacyPage() {
             <p className="mb-4">
               We use third-party services that may collect information automatically:
             </p>
-            
             <div className="ml-4 space-y-4">
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">Google AdSense</h3>
                 <p>
                   We display advertisements provided by Google AdSense. Google may use cookies and similar technologies to serve ads based on your visits to this and other websites. Users may opt out of personalized advertising by visiting{" "}
-                  <a 
-                    href="https://www.google.com/settings/ads" 
-                    target="_blank" 
+                  <a
+                    href="https://www.google.com/settings/ads"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-400 hover:text-blue-300 underline"
                   >
@@ -52,7 +45,6 @@ export default function PrivacyPage() {
                   </a>.
                 </p>
               </div>
-
               <div>
                 <h3 className="text-xl font-semibold text-white mb-2">Vercel</h3>
                 <p>
@@ -80,7 +72,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-semibold text-white mb-3">Contact</h2>
             <p>
               If you have any questions about this Privacy Policy, you may contact us at:{" "}
-              <a 
+              <a
                 href="mailto:onurgul6@gmail.com"
                 className="text-blue-400 hover:text-blue-300 underline"
               >
@@ -89,6 +81,8 @@ export default function PrivacyPage() {
             </p>
           </section>
         </div>
+
+        <PageFooter showGameCTAs={false} />
       </div>
     </div>
   );
