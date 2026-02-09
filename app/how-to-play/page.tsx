@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: 'How to Play Dodecordle | 12 Word Wordle Guide',
   description:
     'Learn how to play Dodecordle: the word puzzle where you solve 12 Wordles at once. Rules, tips, and FAQs for the daily word puzzle and practice mode.',
-};
+  path: '/how-to-play',
+});
 
 export default function HowToPlayPage() {
   return (

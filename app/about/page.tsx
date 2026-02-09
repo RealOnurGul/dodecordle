@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: 'About Dodecordle | 12 Word Wordle & Daily Word Puzzle',
   description:
     'Learn about Dodecordle: the wordle alternative where you solve 12 words at once. Our daily word puzzle and practice mode, and why we built this word game.',
-};
+  path: '/about',
+});
 
 export default function AboutPage() {
   return (

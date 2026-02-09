@@ -5,11 +5,12 @@ import { GameProvider } from "@/lib/context/GameContext";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "Dodecordle - Solve 12 Wordles at Once",
-  description: "A word puzzle game where you solve 12 Wordle puzzles simultaneously",
+  title: { default: 'Dodecordle - Solve 12 Wordles at Once', template: '%s | Dodecordle' },
+  description: 'A word puzzle game where you solve 12 Wordle puzzles simultaneously',
   other: {
     'google-adsense-account': 'ca-pub-3792047273691395',
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

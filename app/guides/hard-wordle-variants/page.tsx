@@ -1,20 +1,22 @@
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
+import { BreadcrumbListJsonLd } from '@/components/JsonLd';
 import { getGuide } from '@/lib/guidesMeta';
+import { buildGuideMetadata } from '@/lib/seo';
+import { getSiteUrl } from '@/lib/siteUrl';
 
 export async function generateMetadata() {
   const guide = getGuide('hard-wordle-variants');
-  return {
-    title: guide ? `${guide.title} | Dodecordle Guides` : 'Guides | Dodecordle',
-    description: guide?.description,
-  };
+  if (!guide) return { title: 'Guides | Dodecordle' };
+  return buildGuideMetadata('/guides/hard-wordle-variants', guide.title, guide.description);
 }
 
 export default function HardWordleVariantsPage() {
   const guide = getGuide('hard-wordle-variants')!;
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
+      <BreadcrumbListJsonLd baseUrl={getSiteUrl()} items={[{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides' }, { name: guide.title }]} />
       <div className="max-w-4xl mx-auto">
         <PageHeader breadcrumbs={[{ label: 'Guides', href: '/guides' }, { label: guide.title }]} />
 

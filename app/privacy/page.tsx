@@ -1,6 +1,14 @@
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Privacy Policy | Dodecordle',
+  description:
+    'Privacy policy for Dodecordle. How we handle data, cookies, and third-party services including Google AdSense and Vercel.',
+  path: '/privacy',
+});
 
 export default function PrivacyPage() {
   return (

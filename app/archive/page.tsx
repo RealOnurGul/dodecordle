@@ -1,15 +1,20 @@
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
+import { BreadcrumbListJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo';
+import { getSiteUrl } from '@/lib/siteUrl';
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: 'Archive | Dodecordle',
   description: 'Past daily puzzles and how to play today’s Dodecordle.',
-};
+  path: '/archive',
+});
 
 export default function ArchivePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
+      <BreadcrumbListJsonLd baseUrl={getSiteUrl()} items={[{ name: 'Home', url: '/' }, { name: 'Archive' }]} />
       <div className="max-w-4xl mx-auto">
         <PageHeader />
 

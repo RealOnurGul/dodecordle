@@ -2,12 +2,14 @@ import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import PageFooter from '@/components/PageFooter';
 import { GUIDE_SLUGS, GUIDES } from '@/lib/guidesMeta';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: 'Guides | Dodecordle',
   description:
     'Strategy guides, tips, and advice for Dodecordle and Wordle-style games: opening words, letter frequency, and how to improve.',
-};
+  path: '/guides',
+});
 
 export default function GuidesIndexPage() {
   return (
